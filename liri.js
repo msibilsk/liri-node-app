@@ -35,7 +35,6 @@ function spotifyThis(param) {
 
 function imbd() {
     var movieName = createParam();
-    console.log(movieName);
     var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&r=json&tomatoes=true";
 
     request({ url: queryUrl, json: true }, function(error, response, body) {
