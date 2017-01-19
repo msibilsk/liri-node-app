@@ -33,13 +33,13 @@ function spotifyThis(param) {
     });
 };
 
-function imbd() {
-    var movieName = createParam();
+function imbd(movieName) {
+    
     var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&r=json&tomatoes=true";
 
     request({ url: queryUrl, json: true }, function(error, response, body) {
 
-        if (!error && response.statusCode === 200 && process.argv[3]) {
+        if (!error && response.statusCode === 200) {
 
             console.log("Title: " + response.body.Title);
             console.log("Release Year: " + response.body.Year);
@@ -51,8 +51,6 @@ function imbd() {
             console.log("Rotten Tomatoes Rating: " + response.body.tomatoRating);
             console.log("Rotten Tomatoes URL: " + response.body.tomatoURL);
 
-        } else if (process.argv[3] === undefined) {
-            console.log("If you haven't watched 'Mr. Nobody,' then you should: http://www.imdb.com/title/tt0485947/ \nIt's on Netflix!")
         }
     });
 };
@@ -86,8 +84,15 @@ switch (process.argv[2]) {
         break;
 
     case "movie-this":
+        if (process.argv[3]) {
 
-        imbd();
+            imbd(createParam());
+
+        } else {
+            console.log("If you haven't watched 'Mr. Nobody,' then you should: http://www.imdb.com/title/tt0485947/ \nIt's on Netflix!");
+            imbd("Mr. Nobody");
+        }
+        
         break;
 
     case "do-what-it-says":
